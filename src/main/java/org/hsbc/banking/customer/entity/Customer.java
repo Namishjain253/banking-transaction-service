@@ -1,4 +1,4 @@
-package org.hsbc.banking.entity;
+package org.hsbc.banking.customer.entity;
 
 import jakarta.persistence.*;
 

@@ -1,9 +1,9 @@
-package org.hsbc.banking.service;
+package org.hsbc.banking.customer.service;
 
-import org.hsbc.banking.dto.CustomerRequest;
-import org.hsbc.banking.dto.CustomerResponse;
-import org.hsbc.banking.entity.Customer;
-import org.hsbc.banking.repository.CustomerRepository;
+import org.hsbc.banking.customer.dto.CustomerRequest;
+import org.hsbc.banking.customer.dto.CustomerResponse;
+import org.hsbc.banking.customer.entity.Customer;
+import org.hsbc.banking.customer.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 @Service

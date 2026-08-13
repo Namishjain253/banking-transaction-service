@@ -1,4 +1,4 @@
-package org.hsbc.banking.dto;
+package org.hsbc.banking.customer.dto;
 
 public class CustomerResponse {
 

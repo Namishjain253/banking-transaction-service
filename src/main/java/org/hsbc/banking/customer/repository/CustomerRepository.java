@@ -1,6 +1,6 @@
-package org.hsbc.banking.repository;
+package org.hsbc.banking.customer.repository;
 
-import org.hsbc.banking.entity.Customer;
+import org.hsbc.banking.customer.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

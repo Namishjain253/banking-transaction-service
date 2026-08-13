@@ -1,15 +1,20 @@
-package org.hsbc.banking.controller;
+package org.hsbc.banking.customer.controller;
 
 import jakarta.validation.Valid;
-import org.hsbc.banking.dto.CustomerRequest;
-import org.hsbc.banking.dto.CustomerResponse;
-import org.hsbc.banking.service.CustomerService;
+import org.hsbc.banking.customer.dto.CustomerRequest;
+import org.hsbc.banking.customer.dto.CustomerResponse;
+import org.hsbc.banking.customer.entity.Customer;
+import org.hsbc.banking.customer.repository.CustomerRepository;
+import org.hsbc.banking.customer.service.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/customers")
+@RequestMapping("/customers")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -17,6 +22,8 @@ public class CustomerController {
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @PostMapping
     public ResponseEntity<CustomerResponse> createCustomer(
@@ -28,5 +35,10 @@ public class CustomerController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(response);
+    }
+
+    @GetMapping
+    public List<Customer> getAllCustomers() {
+        return customerRepository.findAll();
     }
 }
