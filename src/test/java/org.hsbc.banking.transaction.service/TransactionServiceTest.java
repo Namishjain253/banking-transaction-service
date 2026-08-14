@@ -272,4 +272,80 @@ class TransactionServiceTest {
 
         assertThrows(IllegalArgumentException.class,()-> transactionService.deposit(accountId,request));
     }
+
+    @Test
+    void withdraw_whenAmountIsZero_shouldThrowIllegalArgumentException(){
+        Long accountId =1L;
+        TransactionRequest request =  new TransactionRequest();
+        request.setAmount(BigDecimal.ZERO);
+        Account account =  new Account();
+        account.setBalance(BigDecimal.valueOf(1000));
+        when(accountRepository.findById(accountId)).thenReturn(Optional.of(account));
+        assertThrows(IllegalArgumentException.class,()-> transactionService.withdraw(accountId,request));
+    }
+
+    @Test
+    void withdraw_whenResourceNotFound_shouldThrowResourceNotFoundException(){
+        Long accountId =1L;
+        TransactionRequest request =  new TransactionRequest();
+        request.setAmount(new BigDecimal("100"));
+        when(accountRepository.findById(accountId)).thenReturn(Optional.empty());
+        assertThrows(ResourceNotFoundException.class,()-> transactionService.withdraw(accountId,request));
+    }
+
+    @Test
+    void transfer_whenIllegalArgument_shouldThrowIllegalArgumentException(){
+        TransferRequest transferRequest = new TransferRequest();
+        transferRequest.setFromAccountId(1L);
+        transferRequest.setToAccountId(1L);
+        assertThrows(IllegalArgumentException.class,()-> transactionService.transfer(transferRequest));
+    }
+
+    @Test
+    void transfer_whenAmountIllegalArgument_shouldThrowIllegalArgumentException(){
+        TransferRequest transferRequest = new TransferRequest();
+        transferRequest.setFromAccountId(1L);
+        transferRequest.setAmount(null);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,()-> transactionService.transfer(transferRequest));
+        assertEquals("Transfer amount must be greater than zero", exception.getMessage());
+    }
+
+    @Test
+    void transfer_ToAccountIdResourceNotFound_shouldThrowResourceNotFoundException(){
+        Long fromId = 1L;
+        Long toId = 2L;
+        TransferRequest request = new TransferRequest();
+        request.setFromAccountId(fromId);
+        request.setToAccountId(toId);
+        request.setAmount(new BigDecimal("100"));
+
+        Account mockFromAccount = new Account();
+        mockFromAccount.setId(fromId);
+
+        when(accountRepository.findById(fromId)).thenReturn(Optional.of(mockFromAccount));
+        when(accountRepository.findById(toId)).thenReturn(Optional.empty());
+
+        // When & Then
+        assertThrows(ResourceNotFoundException.class, () -> {
+            transactionService.transfer(request);
+        });
+    }
+
+    @Test
+    void transfer_FromAccountIdResourceNotFound_shouldThrowResourceNotFoundException(){
+        Long fromId = 1L;
+        Long toId = 2L;
+
+        TransferRequest request = new TransferRequest();
+        request.setFromAccountId(fromId);
+        request.setToAccountId(toId);
+        request.setAmount(new BigDecimal("100"));
+
+        when(accountRepository.findById(fromId)).thenReturn(Optional.empty());
+
+        // When & Then
+        assertThrows(ResourceNotFoundException.class, () -> {
+            transactionService.transfer(request);
+        });
+    }
 }
