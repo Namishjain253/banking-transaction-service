@@ -14,7 +14,9 @@ import java.util.List;
 @Service
 public class AccountService {
 
+
     private final AccountRepository accountRepository;
+
     private final CustomerRepository customerRepository;
 
     public AccountService(AccountRepository accountRepository,
@@ -63,7 +65,7 @@ public class AccountService {
                                 "Account not found with id: " + id));
     }
 
-    public Account updateAccount(Long id, Account account) {
+    public Account updateAccount(Long id, AccountRequest account) {
 
         Account existingAccount = getAccountById(id);
 
@@ -76,8 +78,10 @@ public class AccountService {
         existingAccount.setBalance(
                 account.getBalance());
 
-        existingAccount.setCustomer(
-                account.getCustomer());
+        Customer newCustomer = new Customer();
+        newCustomer.setId(account.getCustomerId());
+
+        existingAccount.setCustomer(newCustomer);
 
         return accountRepository.save(existingAccount);
     }

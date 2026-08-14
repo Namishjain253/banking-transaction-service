@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class TransactionService {
@@ -19,8 +20,7 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final AccountRepository accountRepository;
 
-    public TransactionService(TransactionRepository transactionRepository,
-                              AccountRepository accountRepository) {
+    public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository){
         this.transactionRepository = transactionRepository;
         this.accountRepository = accountRepository;
     }
@@ -153,5 +153,24 @@ public class TransactionService {
         creditTransaction.setAccount(toAccount);
 
         transactionRepository.save(creditTransaction);
+    }
+
+    public Transaction createTransaction(TransactionRequest transaction){
+        Transaction newTransaction = new Transaction();
+        newTransaction.setAmount(transaction.getAmount());
+        return transactionRepository.save(newTransaction);
+    }
+
+    public List<Transaction> getAllTransactions(){
+        return transactionRepository.findAll();
+    }
+
+    public void deleteTransaction(Long id){
+        Transaction transaction = transactionRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Transaction not found with id: " + id));
+
+        transactionRepository.delete(transaction);
     }
 }

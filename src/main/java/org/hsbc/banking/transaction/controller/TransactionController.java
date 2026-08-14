@@ -5,7 +5,6 @@ import jakarta.validation.Valid;
 import org.hsbc.banking.transaction.dto.TransactionRequest;
 import org.hsbc.banking.transaction.dto.TransferRequest;
 import org.hsbc.banking.transaction.entity.Transaction;
-import org.hsbc.banking.transaction.repository.TransactionRepository;
 import org.hsbc.banking.transaction.service.TransactionService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,34 +15,27 @@ import java.util.List;
 @RequestMapping("/transactions")
 public class TransactionController {
 
-    private final TransactionRepository transactionRepository;
+
     private final TransactionService transactionService;
 
-    public TransactionController(TransactionRepository transactionRepository,
-                                 TransactionService transactionService) {
-        this.transactionRepository = transactionRepository;
+    public TransactionController(TransactionService transactionService){
         this.transactionService = transactionService;
     }
 
     @PostMapping
-    public Transaction createTransaction(@RequestBody Transaction transaction) {
-        return transactionRepository.save(transaction);
+    public Transaction createTransaction(@RequestBody TransactionRequest transaction) {
+        return transactionService.createTransaction(transaction);
     }
 
     @GetMapping
     public List<Transaction> getAllTransactions() {
-        return transactionRepository.findAll();
+        return transactionService.getAllTransactions();
     }
 
     @DeleteMapping("/{id}")
     public String deleteTransaction(@PathVariable Long id) {
 
-        Transaction transaction = transactionRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "Transaction not found with id: " + id));
-
-        transactionRepository.delete(transaction);
+        transactionService.deleteTransaction(id);
 
         return "Transaction deleted successfully";
     }

@@ -6,6 +6,8 @@ import org.hsbc.banking.customer.entity.Customer;
 import org.hsbc.banking.customer.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerService {
 
@@ -13,6 +15,10 @@ public class CustomerService {
 
     public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
+    }
+
+    public List<Customer> getAllCustomers(){
+       return customerRepository.findAll();
     }
 
     public CustomerResponse createCustomer(CustomerRequest request) {

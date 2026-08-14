@@ -14,9 +14,10 @@ import java.util.List;
 @RequestMapping("/accounts")
 public class AccountController {
 
+
     private final AccountService accountService;
 
-    public AccountController(AccountService accountService) {
+    public AccountController(AccountService accountService){
         this.accountService = accountService;
     }
 
@@ -40,7 +41,7 @@ public class AccountController {
 
     @PutMapping("/{id}")
     public Account updateAccount(@PathVariable Long id,
-                                 @RequestBody Account account) {
+                                 @RequestBody AccountRequest account) {
 
         return accountService.updateAccount(id, account);
     }
