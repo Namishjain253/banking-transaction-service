@@ -11,12 +11,11 @@ import java.time.Instant;
 import java.util.Date;
 
 @Service
+@SuppressWarnings("java:S2143")
 public class JwtService {
 
     @Value("${jwt.secret}")
     private String secret;
-    Instant now = Instant.now();
-    Instant expiration = now.plusSeconds(60 * 60L);
 
     private SecretKey getKey() {
         return Keys.hmacShaKeyFor(
@@ -25,6 +24,9 @@ public class JwtService {
     }
 
     public String generateToken(String username) {
+
+        Instant now = Instant.now();
+        Instant expiration = now.plusSeconds(60 * 60L);
 
         return Jwts.builder()
                 .subject(username)
