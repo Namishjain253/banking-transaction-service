@@ -33,6 +33,7 @@ public class Transaction {
     private Account account;
 
     public Transaction() {
+        super();
     }
 
     public Long getId() {

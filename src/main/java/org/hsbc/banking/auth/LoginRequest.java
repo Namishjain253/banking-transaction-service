@@ -11,6 +11,7 @@ public class LoginRequest {
     private String password;
 
     public LoginRequest() {
+        super();
     }
 
     public String getUsername() {

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -17,7 +18,7 @@ public class GlobalExceptionHandler {
             ResourceNotFoundException ex) {
 
         ErrorResponse error = new ErrorResponse(
-                LocalDateTime.now(),
+                LocalDateTime.now(ZoneOffset.UTC),
                 HttpStatus.NOT_FOUND.value(),
                 ex.getMessage()
         );
@@ -30,7 +31,7 @@ public class GlobalExceptionHandler {
             IllegalArgumentException ex) {
 
         ErrorResponse error = new ErrorResponse(
-                LocalDateTime.now(),
+                LocalDateTime.now(ZoneOffset.UTC),
                 HttpStatus.BAD_REQUEST.value(),
                 ex.getMessage()
         );
@@ -43,7 +44,7 @@ public class GlobalExceptionHandler {
             Exception ex) {
 
         ErrorResponse error = new ErrorResponse(
-                LocalDateTime.now(),
+                LocalDateTime.now(ZoneOffset.UTC),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "An unexpected error occurred"
         );
@@ -65,7 +66,7 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.joining(", "));
 
         ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
+                LocalDateTime.now(ZoneOffset.UTC),
                 HttpStatus.BAD_REQUEST.value(),
                 message
 

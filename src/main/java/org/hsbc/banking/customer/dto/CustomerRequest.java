@@ -18,7 +18,7 @@ public class CustomerRequest {
 
     @NotBlank(message = "Mobile number is required")
     @Pattern(
-            regexp = "^[0-9]{10}$",
+            regexp = "^\\d{10}$",
             message = "Mobile number must contain 10 digits"
     )
     private String mobileNumber;
