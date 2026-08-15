@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Service
@@ -51,7 +52,7 @@ public class TransactionService {
         transaction.setAccount(account);
         transaction.setAmount(request.getAmount());
         transaction.setTransactionType("DEPOSIT");
-        transaction.setTransactionDate(LocalDateTime.now());
+        transaction.setTransactionDate(LocalDateTime.now(ZoneOffset.UTC));
 
         return transactionRepository.save(transaction);
     }
@@ -88,7 +89,7 @@ public class TransactionService {
         transaction.setAccount(account);
         transaction.setAmount(request.getAmount());
         transaction.setTransactionType("WITHDRAWAL");
-        transaction.setTransactionDate(LocalDateTime.now());
+        transaction.setTransactionDate(LocalDateTime.now(ZoneOffset.UTC));
 
         return transactionRepository.save(transaction);
     }
@@ -141,7 +142,7 @@ public class TransactionService {
         Transaction debitTransaction = new Transaction();
         debitTransaction.setAmount(amount);
         debitTransaction.setTransactionType("TRANSFER_DEBIT");
-        debitTransaction.setTransactionDate(LocalDateTime.now());
+        debitTransaction.setTransactionDate(LocalDateTime.now(ZoneOffset.UTC));
         debitTransaction.setAccount(fromAccount);
 
         transactionRepository.save(debitTransaction);
@@ -149,7 +150,7 @@ public class TransactionService {
         Transaction creditTransaction = new Transaction();
         creditTransaction.setAmount(amount);
         creditTransaction.setTransactionType("TRANSFER_CREDIT");
-        creditTransaction.setTransactionDate(LocalDateTime.now());
+        creditTransaction.setTransactionDate(LocalDateTime.now(ZoneOffset.UTC));
         creditTransaction.setAccount(toAccount);
 
         transactionRepository.save(creditTransaction);

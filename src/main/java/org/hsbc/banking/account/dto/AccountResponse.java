@@ -11,6 +11,7 @@ public class AccountResponse {
     private Long customerId;
 
     public AccountResponse() {
+        super();
     }
 
     public AccountResponse(Long id,

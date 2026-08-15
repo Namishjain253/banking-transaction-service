@@ -11,6 +11,7 @@ public class RegisterRequest {
     private String password;
 
     public RegisterRequest() {
+        super();
     }
 
     public String getUsername() {

@@ -59,6 +59,8 @@ class TransactionServiceTest {
 
         verify(accountRepository).save(account);
         verify(transactionRepository).save(any(Transaction.class));
+        assertNotNull(result);
+        assertEquals(new BigDecimal("500"), result.getAmount());
     }
 
     @Test
@@ -87,6 +89,8 @@ class TransactionServiceTest {
         verify(accountRepository).save(account);
         verify(transactionRepository)
                 .save(any(Transaction.class));
+        assertNotNull(result);
+        assertEquals(new BigDecimal("1000"), result.getAmount());
     }
 
     @Test

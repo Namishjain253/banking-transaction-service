@@ -9,6 +9,7 @@ public class CustomerResponse {
     private String mobileNumber;
 
     public CustomerResponse() {
+        super();
     }
 
     public CustomerResponse(Long id, String firstName, String lastName,

@@ -22,6 +22,7 @@ public class AccountRequest {
     private Long customerId;
 
     public AccountRequest() {
+        super();
     }
 
     public Long getCustomerId() {
